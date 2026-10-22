@@ -1,0 +1,3 @@
+config INPUT_SUPPRESS_NATIVE_TEST
+    bool "Exercise final filter through the actual listener and HID"
+    depends on ZMK_INPUT_SUPPRESS

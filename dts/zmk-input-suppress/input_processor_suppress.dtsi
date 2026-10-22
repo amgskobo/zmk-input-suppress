@@ -1,0 +1,13 @@
+/* SPDX-License-Identifier: MIT */
+#ifndef ZMK_INPUT_SUPPRESS_DTSI
+#define ZMK_INPUT_SUPPRESS_DTSI
+#include <dt-bindings/input/suppress.h>
+/ {
+    input_processors {
+        input_suppress: input_suppress {
+            compatible = "zmk,input-processor-suppress";
+            #input-processor-cells = <1>;
+        };
+    };
+};
+#endif

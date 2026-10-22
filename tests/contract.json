@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "host": [
+    "bash",
+    "tests/run.sh"
+  ],
+  "contracts": [
+    {
+      "fixture": "tests/test_coverage.py",
+      "asserts": "Actual validator accepts complete function measurement and rejects empty/unrelated/partial reports, uncalled functions, missing executable lines, missed lines and branches; optimized Python retains the same validation"
+    },
+    {
+      "fixture": "tests/driver.c",
+      "asserts": "48 repeats; 24 overlaps; all17 slots; ordered frames; invalid mask/source; traversed-contact masks; owed pairs; source independence; named negative controls"
+    },
+    {
+      "fixture": "tests/integration/module/main.c",
+      "asserts": "Real input/listener/HID with direct route masks, core alias counts, delayed taps, pending/silent frames, source independence and untraversed-route neutrality"
+    }
+  ],
+  "limits": "No physical transport, source-loss cleanup, runtime settings or global layer observation."
+}

@@ -1,0 +1,4 @@
+# SPDX-License-Identifier: MIT
+description: Final source-button and residual-ABS filter; param1 is a suppression mask
+compatible: "zmk,input-processor-suppress"
+include: ip_one_param.yaml

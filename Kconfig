@@ -1,0 +1,8 @@
+# SPDX-License-Identifier: MIT
+DT_COMPAT_ZMK_INPUT_PROCESSOR_SUPPRESS := zmk,input-processor-suppress
+config ZMK_INPUT_SUPPRESS
+    bool
+    default $(dt_compat_enabled,$(DT_COMPAT_ZMK_INPUT_PROCESSOR_SUPPRESS))
+    depends on ZMK_POINTING
+    depends on !ZMK_SPLIT || ZMK_SPLIT_ROLE_CENTRAL
+    depends on INPUT_MODE_THREAD

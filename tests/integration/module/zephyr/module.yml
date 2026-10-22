@@ -1,0 +1,4 @@
+name: input-suppress-native-tests
+build:
+  cmake: .
+  kconfig: Kconfig

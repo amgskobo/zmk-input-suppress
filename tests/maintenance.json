@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "owner": "zmk-input-suppress",
+  "supported_cores": [
+    "stock-zmk",
+    "dya"
+  ],
+  "commands": [
+    "bash tests/run-docker.sh",
+    "ZMK_TEST_MODE=full bash tests/run-docker.sh",
+    "python3 -m unittest discover -s tests -p 'test_*.py' -v (also included in both canonical host modes)",
+    "ZMK_TEST_OUTPUT=FRESH bash tests/run-native.sh RESOLVED_WORKSPACE"
+  ],
+  "coverage_map": "tests/contract.json",
+  "preserved_assertions": "tests/README.md; current direct-mask fixtures unchanged; historical settings/global-layer interfaces explicitly retired and externally archived",
+  "gaps": [
+    "Source-loss/epoch handoff and consumer replacement are not implemented.",
+    "Native is actual input/listener/HID and kernel, not physical delivery.",
+    "No runtime suppression settings or observation of untraversed layer activations; intentional minimal-core contract."
+  ]
+}
