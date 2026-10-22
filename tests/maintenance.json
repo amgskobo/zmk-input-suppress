@@ -9,7 +9,8 @@
     "bash tests/run-docker.sh",
     "ZMK_TEST_MODE=full bash tests/run-docker.sh",
     "python3 -m unittest discover -s tests -p 'test_*.py' -v (also included in both canonical host modes)",
-    "ZMK_TEST_OUTPUT=FRESH bash tests/run-native.sh RESOLVED_WORKSPACE"
+    "ZMK_TEST_OUTPUT=FRESH bash tests/run-native.sh RESOLVED_WORKSPACE",
+    "python3 -m unittest discover -s tests/integration -p test_*.py -v; actual workspace discovery/empty-list/cache-link guards, included in the host entry"
   ],
   "coverage_map": "tests/contract.json",
   "preserved_assertions": "tests/README.md; current direct-mask fixtures unchanged; historical settings/global-layer interfaces explicitly retired and externally archived",

@@ -6,6 +6,10 @@
   ],
   "contracts": [
     {
+      "fixture": "tests/integration/test_workspace_env.py",
+      "asserts": "Actual selected-workspace helper replaces ambient paths, handles cache links/spaces and rejects failed project discovery or an empty module list before native compilation"
+    },
+    {
       "fixture": "tests/test_coverage.py",
       "asserts": "Actual validator accepts complete function measurement and rejects empty/unrelated/partial reports, uncalled functions, missing executable lines, missed lines and branches; optimized Python retains the same validation"
     },
