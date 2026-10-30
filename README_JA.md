@@ -24,11 +24,15 @@
 
 別のパッドがレイヤーを上げ下げしても、この入力元のイベントがその経路を通らなければ
 抑止を継承しません。各変換モジュールは共通抑止器の参照やAPIを持ちません。
-Matrixの有効・無効もジェスチャーだけを制御します。全経路の末尾に同じインスタンスを置きます。
+[Matrix](https://github.com/amgskobo/zmk-input-matrix)の有効・無効もジェスチャーだけを制御します。全経路の末尾に同じインスタンスを置きます。
 
 従来のprofile・window API、レイヤー監視、旧設定名の互換アダプターは削除しました。
 旧 `amgskobo__a2r` / `amgskobo__sup` の保存値は消去しませんが読み込み・適用もしません。
 抑止はDTSのマスクで決まり、Studioでの旧抑止設定は利用できません。
-公開先は https://github.com/amgskobo/zmk-input-suppress です。
-対応する変換モジュール群と合わせて、レビュー済みコミットまたはローカルのチェックアウトを選択します。
+公開先は [zmk-input-suppress](https://github.com/amgskobo/zmk-input-suppress) です。
+[abs2rel](https://github.com/amgskobo/zmk-input-abs2rel)、
+[PadStick](https://github.com/amgskobo/zmk-input-padstick)、
+[Matrix](https://github.com/amgskobo/zmk-input-matrix)、
+[Temp Layer Touch](https://github.com/amgskobo/zmk-input-temp-layer-touch) と合わせて、
+レビュー済みコミットまたはローカルのチェックアウトを選択します。
 詳細なマスク・移行・制約・検証は [README.md](README.md) と [tests/README.md](tests/README.md) を参照してください。

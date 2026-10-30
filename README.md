@@ -24,7 +24,8 @@ The module supports unchanged stock ZMK and DYA.
 ```
 
 The include supplies the standard `input_suppress` node and mask definitions.
-Converter/mapper/Matrix nodes belong to their respective modules. A listener
+[abs2rel](https://github.com/amgskobo/zmk-input-abs2rel), mapper and
+[Matrix](https://github.com/amgskobo/zmk-input-matrix) nodes belong to their respective modules. A listener
 child replaces its parent chain, so the final processor must appear on each
 route. Coordinate and gesture processors must preserve original button edges,
 including touch, through their resets. Each original edge must reach the final
@@ -69,18 +70,18 @@ silent. If another pad raises and lowers a layer without an event from this
 source traversing its route, this source inherits no suppression. Put the same
 final instance on both sides' scroll routes to apply a shared layer when their
 events actually use it. The layer-raising event can still use its previously
-selected route; edge-touch drops the transition coordinate, and the next routed
+selected route; [edge-touch](https://github.com/amgskobo/zmk-input-temp-layer-touch) drops the transition coordinate, and the next routed
 event, including touch-up, supplies the scroll mask. Complete source contact
 boundaries are required; this filter does not reconstruct lost events.
 
 ## Set operation and migration
 
-Use this independent module with pure abs2rel/scroll, PadStick, Matrix and
-edge-touch modules. They do not reference this filter, publish windows or alter
+Use this independent module with pure [abs2rel](https://github.com/amgskobo/zmk-input-abs2rel)/scroll, [PadStick](https://github.com/amgskobo/zmk-input-padstick), [Matrix](https://github.com/amgskobo/zmk-input-matrix) and
+[edge-touch](https://github.com/amgskobo/zmk-input-temp-layer-touch) modules. They do not reference this filter, publish windows or alter
 its state. They own conversion, motion scheduling, gestures and layer claims.
-Matrix enable changes gestures only. The application owns route ordering and
+[Matrix](https://github.com/amgskobo/zmk-input-matrix) enable changes gestures only. The application owns route ordering and
 masks. The independent module is published at
-https://github.com/amgskobo/zmk-input-suppress. Select a reviewed commit of this
+[zmk-input-suppress](https://github.com/amgskobo/zmk-input-suppress). Select a reviewed commit of this
 module alongside the matching producer versions, or select its local checkout
 explicitly as a Zephyr module. A minimal west project entry is:
 
@@ -101,7 +102,7 @@ now determine policy; old Studio suppression controls are unavailable. No storag
 erase is necessary.
 
 See [the owner test guide and retirement map](tests/README.md).
-Inertia's scheduled outputs and virtual KSCAN/keymap outputs have their own
+[Inertia](https://github.com/amgskobo/zmk-input-inertia)'s scheduled outputs and virtual KSCAN/keymap outputs have their own
 lifetimes and may bypass this source filter. Source loss/epoch reuse and consumer
 replacement cleanup are not implemented. Host/native/compile results do not
 establish physical USB/BLE/split, timing or power acceptance.
