@@ -8,6 +8,12 @@
 static const struct device *a = DEVICE_DT_GET(DT_NODELABEL(source_a));
 static const struct device *b = DEVICE_DT_GET(DT_NODELABEL(source_b));
 static const struct device *gate = DEVICE_DT_GET(DT_NODELABEL(input_suppress));
+#define INDEX_IF_LISTENER(n, label) \
+ + (DT_SAME_NODE(DT_INST(n, zmk_input_listener), DT_NODELABEL(label)) ? (n) : 0)
+enum {
+ index_a = 0 LISTIFY(DT_NUM_INST_STATUS_OKAY(zmk_input_listener), INDEX_IF_LISTENER, (), listener_a),
+ index_b = 0 LISTIFY(DT_NUM_INST_STATUS_OKAY(zmk_input_listener), INDEX_IF_LISTENER, (), listener_b)
+};
 static unsigned sends;
 static int last_x;
 int __real_zmk_endpoint_send_mouse_report(void);
@@ -31,6 +37,10 @@ static void route(bool enabled) {
 static void run(void *x,void *y,void *z) {
  ARG_UNUSED(x); ARG_UNUSED(y); ARG_UNUSED(z);
  __ASSERT_NO_MSG(device_is_ready(gate)); held(false);
+ __ASSERT_NO_MSG(index_a == (IS_ENABLED(CONFIG_INPUT_SUPPRESS_NATIVE_LOW_SOURCES) ? 0 : 3));
+ __ASSERT_NO_MSG(index_b == (IS_ENABLED(CONFIG_INPUT_SUPPRESS_NATIVE_LOW_SOURCES) ? 1 : 4));
+ printk("listener indices=%u/%u enabled=%u allocation=%u\n", index_a, index_b,
+        DT_NUM_INST_STATUS_OKAY(zmk_input_listener), CONFIG_ZMK_INPUT_SUPPRESS_MAX_SOURCES);
  unsigned before=sends;
  button(a,INPUT_BTN_0,1,false); held(true);
  button(a,INPUT_BTN_0,2,true); __ASSERT_NO_MSG(sends==before+1);

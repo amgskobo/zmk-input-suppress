@@ -7,7 +7,15 @@
 #define BIT(n) (UINT32_C(1) << (n))
 #define MAX(a,b) ((a) > (b) ? (a) : (b))
 #define ARG_UNUSED(x) ((void)(x))
-#define DT_NUM_INST_STATUS_OKAY(c) 2
+#ifndef TEST_LISTENER_COUNT
+#define TEST_LISTENER_COUNT 2
+#endif
+#ifndef CONFIG_ZMK_INPUT_SUPPRESS_MAX_SOURCES
+#define CONFIG_ZMK_INPUT_SUPPRESS_MAX_SOURCES 0
+#endif
+#define DT_NUM_INST_STATUS_OKAY(c) TEST_LISTENER_COUNT
+/* Real DT traversal is exercised by the native build/admission matrix. */
+#define LISTIFY(count, fn, sep)
 #define DT_INST_FOREACH_STATUS_OKAY(fn)
 #define ZMK_INPUT_PROC_CONTINUE 0
 #define ZMK_INPUT_PROC_STOP 1

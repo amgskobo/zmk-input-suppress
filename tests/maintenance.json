@@ -10,6 +10,8 @@
     "ZMK_TEST_MODE=full bash tests/run-docker.sh",
     "python3 -m unittest discover -s tests -p 'test_*.py' -v (also included in both canonical host modes)",
     "ZMK_TEST_OUTPUT=FRESH bash tests/run-native.sh RESOLVED_WORKSPACE",
+    "ZMK_TEST_OUTPUT=FRESH bash tests/run-native-sanitized.sh RESOLVED_WORKSPACE (strict upstream boundary; known signed-shift blockage is not PASS)",
+    "ZMK_TEST_OUTPUT=FRESH bash tests/run-arm.sh RESOLVED_WORKSPACE EXACT_ARCHIVED_BASELINE_OWNER (both supported cores)",
     "python3 -m unittest discover -s tests/integration -p test_*.py -v; actual workspace discovery/empty-list/cache-link guards, included in the host entry"
   ],
   "coverage_map": "tests/contract.json",

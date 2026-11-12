@@ -1,0 +1,12 @@
+/* SPDX-License-Identifier: MIT */
+/* Recreate the unchanged mouse listener definitions after the two test pads.
+ * The automatic high-index fixture remains the original keymap without this
+ * overlay. Both profiles retain five enabled listeners. */
+/delete-node/ &mkp_input_listener;
+/delete-node/ &mmv_input_listener;
+/delete-node/ &msc_input_listener;
+/ {
+ mkp_input_listener: mkp_input_listener { compatible = "zmk,input-listener"; device = <&mkp>; };
+ mmv_input_listener: mmv_input_listener { compatible = "zmk,input-listener"; device = <&mmv>; };
+ msc_input_listener: msc_input_listener { compatible = "zmk,input-listener"; device = <&msc>; };
+};

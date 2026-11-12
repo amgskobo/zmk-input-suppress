@@ -7,7 +7,32 @@
 #include <drivers/input_processor.h>
 #include <zmk-input-suppress/core.h>
 
+#if CONFIG_ZMK_INPUT_SUPPRESS_MAX_SOURCES > 0
+#define SOURCE_COUNT CONFIG_ZMK_INPUT_SUPPRESS_MAX_SOURCES
+#else
 #define SOURCE_COUNT MAX(DT_NUM_INST_STATUS_OKAY(zmk_input_listener), 1)
+#endif
+
+/* Match the core's global instance indices, including holes for disabled
+ * devices. The core compiles every child route, even a disabled child. */
+#define SUPPRESS_CHECK_PROCESSOR(node, prop, idx, listener_index) \
+    BUILD_ASSERT(!(DT_NODE_HAS_COMPAT(DT_PHANDLE_BY_IDX(node, prop, idx), \
+                                     zmk_input_processor_suppress) && \
+                   DT_NODE_HAS_STATUS(DT_PHANDLE_BY_IDX(node, prop, idx), okay)) || \
+                     (listener_index) < SOURCE_COUNT, \
+                 "Input Suppress listener index exceeds MAX_SOURCES");
+#define SUPPRESS_CHECK_ROUTE(node, listener_index) \
+    COND_CODE_1(DT_NODE_HAS_PROP(node, input_processors), \
+                (DT_FOREACH_PROP_ELEM_VARGS(node, input_processors, \
+                                           SUPPRESS_CHECK_PROCESSOR, listener_index)), ())
+#define SUPPRESS_CHECK_LISTENER(n, ...) \
+    COND_CODE_1(DT_NODE_HAS_STATUS( \
+                    DT_PHANDLE(DT_INST(n, zmk_input_listener), device), okay), \
+                (SUPPRESS_CHECK_ROUTE(DT_INST(n, zmk_input_listener), n) \
+                 DT_FOREACH_CHILD_VARGS(DT_INST(n, zmk_input_listener), \
+                                        SUPPRESS_CHECK_ROUTE, n)), ())
+LISTIFY(DT_NUM_INST_STATUS_OKAY(zmk_input_listener), SUPPRESS_CHECK_LISTENER, ())
+
 struct suppress_data { struct zmk_suppress_history sources[SOURCE_COUNT]; };
 
 static void neutral(struct input_event *event, bool sync) {

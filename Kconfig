@@ -6,3 +6,15 @@ config ZMK_INPUT_SUPPRESS
     depends on ZMK_POINTING
     depends on !ZMK_SPLIT || ZMK_SPLIT_ROLE_CENTRAL
     depends on INPUT_MODE_THREAD
+
+config ZMK_INPUT_SUPPRESS_MAX_SOURCES
+    int "Input Suppress global listener index slots (0 = automatic)"
+    default 0
+    range 0 256
+    depends on ZMK_INPUT_SUPPRESS
+    help
+      Automatic allocation retains one history for each enabled input listener,
+      with a minimum of one. A positive value allocates global listener indices
+      0 through N-1 without remapping them. Every listener route referencing an
+      enabled Input Suppress device must fit; direct callers must use the same
+      bound. Recheck compiled indices and callers before reducing this value.

@@ -1,0 +1,9 @@
+/* SPDX-License-Identifier: MIT */
+#include <dt-bindings/input/suppress.h>
+&msc_input_listener {
+ gestures {
+  status = "disabled";
+  layers = <1>;
+  input-processors = <&input_suppress SUPPRESS_ALL>;
+ };
+};

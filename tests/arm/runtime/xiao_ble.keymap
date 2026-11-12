@@ -1,0 +1,11 @@
+/* SPDX-License-Identifier: MIT */
+/ {
+ chosen { zmk,kscan = <&kscan>; };
+ kscan: kscan {
+  compatible = "zmk,kscan-mock";
+  rows = <2>;
+  columns = <2>;
+  events = <>;
+ };
+};
+#include "../../integration/runtime/native_sim.keymap"

@@ -1,3 +1,7 @@
 config INPUT_SUPPRESS_NATIVE_TEST
     bool "Exercise final filter through the actual listener and HID"
     depends on ZMK_INPUT_SUPPRESS
+
+config INPUT_SUPPRESS_NATIVE_LOW_SOURCES
+    bool "Require the alternate global listener indices 0 and 1"
+    depends on INPUT_SUPPRESS_NATIVE_TEST

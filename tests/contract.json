@@ -6,6 +6,18 @@
   ],
   "contracts": [
     {
+      "fixture": "tests/source-count.c",
+      "asserts": "All256 source IDs, invalid masks and NULL fallback; automatic minimum-one/two/five/256 and explicit1/2/256 allocations, pair balance and independent histories under ASan/UBSan"
+    },
+    {
+      "fixture": "tests/native-matrix.py; tests/test_native_admission.py; tests/test_native_sanitizers.py",
+      "asserts": "Fixed original-high and alternate-low native profiles, limit256, enabled-device/listener and base/all-child reference guards, named expected rejections, all five original families and19 ordered HID reports per accepted repeat; reject ambient selectors before builds; separate strict sanitizer upstream boundary"
+    },
+    {
+      "fixture": "tests/measure-arm.py",
+      "asserts": "Real selected-core ARM driver command/config/DTS and symbols for exact baseline/default/limit2; five/five/two16-byte histories; unchanged automatic text; retained compiler stack frames"
+    },
+    {
       "fixture": "tests/integration/test_workspace_env.py",
       "asserts": "Actual selected-workspace helper replaces ambient paths, handles cache links/spaces and rejects failed project discovery or an empty module list before native compilation"
     },

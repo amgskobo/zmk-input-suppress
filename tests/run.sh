@@ -20,6 +20,15 @@ for variant in "${variants[@]}"; do
     "$root/tests/driver.c" -o "$out/$variant"
   ASAN_OPTIONS=detect_leaks=0 "$out/$variant" | tee "$out/$variant.log"
 done
+for profile in auto-zero:0:0 auto-two:2:0 auto-five:5:0 limited-one:5:1 limited-two:5:2 limit256:5:256 auto256:256:0; do
+  IFS=: read -r name listeners limit <<<"$profile"
+  cc -std=c11 -Wall -Wextra -Werror -O1 -g -fsanitize=address,undefined \
+    -fno-omit-frame-pointer -fno-sanitize-recover=all \
+    -DTEST_LISTENER_COUNT="$listeners" -DCONFIG_ZMK_INPUT_SUPPRESS_MAX_SOURCES="$limit" \
+    -I"$root/tests/support" -I"$root/include" -I"$root/dts" \
+    "$root/tests/source-count.c" -o "$out/$name"
+  ASAN_OPTIONS=detect_leaks=0 "$out/$name" | tee "$out/$name.log"
+done
 cc -std=c11 -Wall -Wextra -Werror -O1 -DTEST_SHARED_HISTORY \
   -I"$root/tests/support" -I"$root/include" -I"$root/dts" "$root/tests/driver.c" -o "$out/shared-history"
 set +e

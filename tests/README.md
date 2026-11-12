@@ -10,6 +10,10 @@ ZMK_TEST_MODE=full bash tests/run-docker.sh
 # In the pinned Linux image, using an already resolved west workspace:
 ZMK_TEST_OUTPUT=/fresh/host bash tests/run.sh
 ZMK_TEST_OUTPUT=/fresh/native bash tests/run-native.sh /resolved/workspace
+# Separate strict upstream sanitizer boundary; both fixed profiles run three times:
+ZMK_TEST_OUTPUT=/fresh/strict bash tests/run-native-sanitized.sh /resolved/workspace
+# Real ARM object comparison against an exact archived baseline owner:
+ZMK_TEST_OUTPUT=/fresh/arm bash tests/run-arm.sh /resolved/workspace /exact/baseline-owner
 ```
 
 Quick executes every behavioral case under ASan/UBSan. Full adds optimized and
@@ -33,6 +37,41 @@ Run the native entry on both unchanged supported cores: stock
 `10ba6d0cb38bc3d258775d27982f707599320085`. Each binary runs three times.
 The entry does not fetch dependencies. Set ZEPHYR_BASE/Zephyr_DIR and explicit
 module discovery for symlinked workspaces as required by the selected manifest.
+The canonical native product entry fixes all ten profiles: original automatic
+indices3/4, automatic and limited2 alternate indices0/1 with five enabled
+listeners, limit256, disabled-device/listener admission, and four named allocation
+rejections (original high indices, high base, child and disabled-child routes).
+Each of the six accepted binaries runs three times and must complete all five
+original case families and exactly19 ordered HID reports. Rejection controls
+require the named static assertion and are reported separately from product PASS.
+The alternate overlay redeclares only the test mouse listeners in a later DTS
+position; the original high-index topology remains required. Ambient profile,
+limit and workspace-negative-control selectors are rejected before compilation.
+
+Both portable modes also exercise all256 input IDs and invalid masks under
+ASan/UBSan for automatic zero/two/five/256-listener and explicit1/2/256-slot
+allocations. They check pair balance, unchanged neighboring histories, minimum-one
+allocation and NULL-state source0 fallback. Existing48 repeats,24 overlaps,17
+button slots and named history/contact controls remain unchanged. Full measures
+the original complete driver/core coverage in addition to these boundary probes.
+
+The separate strict native entry enables ASan and UBSan, pins ASAN_RECOVER=n,
+checks real owner/upstream compiler instrumentation and nonrecovery flags, and
+retains three runs of each exact original-auto/low-limit2 ELF. The documented
+upstream `kscan_mock.c:103` signed left shift can block fixture completion on the
+unchanged supported cores. Three matching location-specific failures are recorded
+as BLOCKED_UPSTREAM_SIGNED_SHIFT with a nonzero final exit; they establish no
+owner product PASS. Other failures and timeouts fail. Do not patch the core or
+weaken sanitizer flags to clear this gate.
+
+The ARM entry configures `xiao_ble//zmk` against the selected unchanged core and
+its complete resolved Zephyr/platform graph. It builds the actual driver object
+once, then reuses that exact compile command/config/DTS for archived-baseline
+automatic and current-limit2 objects. A test-only forced header changes only the
+allocation option after the generated config. It retains real objects, section
+sizes, symbols, text hashes and compiler stack-usage files; requires80/80/32-byte
+`data_0` and unchanged baseline/default automatic text; and does not claim physical
+stack high-water or a complete ARM firmware build. Use fresh outputs on each core.
 No runtime settings subsystem is supported by the minimal core; retired settings
 and global-layer assertions are classified below; their targeted sources and
 raw failures are externally archived.

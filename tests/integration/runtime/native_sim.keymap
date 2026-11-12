@@ -11,13 +11,13 @@
  };
  source_a: source_a { compatible = "zmk,input-mock"; event-period = <100>; events = <>; };
  source_b: source_b { compatible = "zmk,input-mock"; event-period = <100>; events = <>; };
- listener_a {
+ listener_a: listener_a {
   compatible = "zmk,input-listener"; device = <&source_a>;
   input-processors = <&input_suppress SUPPRESS_ABS>;
   gestures { layers = <1>; input-processors = <&input_suppress SUPPRESS_ALL>; };
   pointer { layers = <2>; input-processors = <&input_suppress (SUPPRESS_TOUCH | SUPPRESS_ABS)>; };
  };
- listener_b {
+ listener_b: listener_b {
   compatible = "zmk,input-listener"; device = <&source_b>;
   input-processors = <&input_suppress SUPPRESS_ABS>;
   gestures { layers = <1>; input-processors = <&input_suppress SUPPRESS_ALL>; };

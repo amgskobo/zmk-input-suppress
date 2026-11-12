@@ -74,6 +74,39 @@ selected route; [edge-touch](https://github.com/amgskobo/zmk-input-temp-layer-to
 event, including touch-up, supplies the scroll mask. Complete source contact
 boundaries are required; this filter does not reconstruct lost events.
 
+## Listener history allocation
+
+`CONFIG_ZMK_INPUT_SUPPRESS_MAX_SOURCES=0` is the unchanged automatic default:
+each filter instance allocates one history for every enabled `zmk,input-listener`,
+with a minimum of one. A positive value from1 through256 allocates the global
+listener index slots0 throughN-1. Indices are not compacted or remapped. The
+upstream processor state stores an8-bit index;256 retains every representable ID.
+
+For a keyboard whose only filter callers are listener indices0 and1, for example:
+
+```conf
+CONFIG_ZMK_INPUT_SUPPRESS_MAX_SOURCES=2
+```
+
+Check the actual compiled listener numbering and every direct processor caller
+before setting this. Compilation rejects a higher-index enabled listener whose
+enabled device references any enabled Input Suppress instance in its default or
+child routes, including disabled children compiled by the upstream listener.
+An unrelated listener without a filter route requires no history. A disabled
+listener or disabled source device has no callback and is excluded from the guard.
+Direct calls still use the same global indices and must obey the allocation;
+invalid indices remain neutralized and stopped, and NULL state still uses source0.
+
+Each history occupies16 bytes on the documented32-bit ARM ABI. With one shared
+filter and five enabled listeners, choosing two reachable slots reduces its fixed
+history allocation from80 to32 bytes. Both remaining histories retain all17 button
+slots, contact masks, pair obligations and frame state. There are no new threads,
+timers, heap allocations or settings. This option changes no stored key or value
+and requires no settings erase. Raise the bound before adding a higher reachable
+listener, then rebuild and recheck effective DTS, actual objects and hardware.
+Compiler frame sizes are compile evidence; physical stack/heap high-water, host
+HID delivery and transport acceptance still need matching installed images.
+
 ## Set operation and migration
 
 Use this independent module with pure [abs2rel](https://github.com/amgskobo/zmk-input-abs2rel)/scroll, [PadStick](https://github.com/amgskobo/zmk-input-padstick), [Matrix](https://github.com/amgskobo/zmk-input-matrix) and
